@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35027.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A2562BDD-172C-441B-83D5-F6C12F8454C7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{B47FE2DF-04A1-4FE6-9DE0-A3BA43D67AD1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{DE5E9F1E-7532-481B-BC75-8337DB64EEAE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend", "Backend", "{CDFDEA94-DCF9-42A5-A2A7-A4C816069450}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyFinance.API", "src\Backend\EasyFinance.API\EasyFinance.API.csproj", "{7F9AFD2B-C1FD-41AB-AB14-9BE28176D34F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7F9AFD2B-C1FD-41AB-AB14-9BE28176D34F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F9AFD2B-C1FD-41AB-AB14-9BE28176D34F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F9AFD2B-C1FD-41AB-AB14-9BE28176D34F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F9AFD2B-C1FD-41AB-AB14-9BE28176D34F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DE5E9F1E-7532-481B-BC75-8337DB64EEAE} = {A2562BDD-172C-441B-83D5-F6C12F8454C7}
+		{CDFDEA94-DCF9-42A5-A2A7-A4C816069450} = {A2562BDD-172C-441B-83D5-F6C12F8454C7}
+		{7F9AFD2B-C1FD-41AB-AB14-9BE28176D34F} = {CDFDEA94-DCF9-42A5-A2A7-A4C816069450}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2ED7F3DC-7BF8-4C34-BD65-180E37CB48C0}
+	EndGlobalSection
+EndGlobal
