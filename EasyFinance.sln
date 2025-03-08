@@ -14,6 +14,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyFinance.API", "src\Backend\EasyFinance.API\EasyFinance.API.csproj", "{7F9AFD2B-C1FD-41AB-AB14-9BE28176D34F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyFinance.Infraestructure", "src\Backend\EasyFinance.Infraestructure\EasyFinance.Infraestructure.csproj", "{A9EAE244-47A4-461A-8982-39FC226AD5F6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B575A556-C1D9-4D4D-A8E5-E1A6056808F2} = {B575A556-C1D9-4D4D-A8E5-E1A6056808F2}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyFinance.Domain", "src\Backend\EasyFinance.Domain\EasyFinance.Domain.csproj", "{B575A556-C1D9-4D4D-A8E5-E1A6056808F2}"
 EndProject
