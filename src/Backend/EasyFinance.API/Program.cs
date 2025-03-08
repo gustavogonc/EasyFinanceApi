@@ -1,5 +1,7 @@
 using EasyFinance.Infraestructure;
 using EasyFinance.Application;
+using EasyFinance.API.Filters;
+using EasyFinance.Infraestructure.Migrations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,4 +34,14 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+MigrateDatabase();
+
 app.Run();
+
+void MigrateDatabase()
+{
+    var connectionString = builder.Configuration.GetConnectionString("MySqlConnection")!;
+
+    var serviceScope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
+    DatabaseMigration.Migrate(serviceScope.ServiceProvider, connectionString);
+}
