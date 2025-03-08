@@ -2,6 +2,7 @@
 using EasyFinance.Domain.Repositories.User;
 using EasyFinance.Infraestructure.DataAccess;
 using EasyFinance.Infraestructure.DataAccess.Repositories;
+using EasyFinance.Infraestructure.Extensions;
 using FluentMigrator.Runner;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -20,7 +21,7 @@ public static class DependencyInjectionExtension
 
     private static void AddDbContext(IServiceCollection services, IConfiguration configuration)
     {
-        string connectionString = configuration.GetConnectionString("MySqlConnection")!;
+        string connectionString = configuration.ConnectionString();
 
         services.AddDbContext<EasyFinanceDbContext>(options =>
         {
@@ -30,7 +31,7 @@ public static class DependencyInjectionExtension
 
     private static void AddFluentMigrator(IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("MySqlConnection")!;
+        var connectionString = configuration.ConnectionString();
 
         services.AddFluentMigratorCore().ConfigureRunner(options =>
         {
