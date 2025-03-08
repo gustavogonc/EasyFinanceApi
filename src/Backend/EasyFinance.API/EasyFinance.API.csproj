@@ -11,10 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\Shared\EasyFinance.Communication\EasyFinance.Communication.csproj" />
     <ProjectReference Include="..\..\Shared\EasyFinance.Exceptions\EasyFinance.Exceptions.csproj" />
     <ProjectReference Include="..\EasyFinance.Application\EasyFinance.Application.csproj" />
