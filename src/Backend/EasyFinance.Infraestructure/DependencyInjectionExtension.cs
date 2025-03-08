@@ -1,8 +1,10 @@
 ﻿using EasyFinance.Domain.Repositories;
 using EasyFinance.Domain.Repositories.User;
+using EasyFinance.Domain.Security.Cryptography;
 using EasyFinance.Infraestructure.DataAccess;
 using EasyFinance.Infraestructure.DataAccess.Repositories;
 using EasyFinance.Infraestructure.Extensions;
+using EasyFinance.Infraestructure.Security.Cryptography;
 using FluentMigrator.Runner;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -17,6 +19,7 @@ public static class DependencyInjectionExtension
         AddDbContext(services, configuration);
         AddRepositories(services);
         AddFluentMigrator(services, configuration);
+        AddPasswordEncrypter(services);
     }
 
     private static void AddDbContext(IServiceCollection services, IConfiguration configuration)
@@ -47,6 +50,13 @@ public static class DependencyInjectionExtension
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         services.AddScoped<IUserWriteOnlyRepository, UserRepository>();
+        services.AddScoped<IUserReadOnlyRepository, UserRepository>();
+    }
+
+
+    private static void AddPasswordEncrypter(IServiceCollection services)
+    {
+        services.AddScoped<IPasswordEncrypter, PasswordEncrypter>();
     }
 }
 
