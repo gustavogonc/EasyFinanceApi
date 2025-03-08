@@ -5,6 +5,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+builder.Services.AddMvc(options => options.Filters.Add(typeof(ExceptionFilter)));
+
 builder.Services.AddRouting(options =>
 {
     options.LowercaseUrls = true;
