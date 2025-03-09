@@ -1,6 +1,7 @@
 ﻿using EasyFinance.Communication.Response;
 using EasyFinance.Domain.Repositories.User;
 using EasyFinance.Domain.Security.Tokens;
+using EasyFinance.Exceptions;
 using EasyFinance.Exceptions.ExceptionBase;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -20,7 +21,7 @@ public class AuthenticatedUserFilter(IUserReadOnlyRepository repository, IAccess
 			var exist = await repository.ExistActiveUserWithIdentifierAsync(userIdentifier);
 
 			if (!exist)
-				throw new UnauthorizedException("You can't access this resource.");
+				throw new UnauthorizedException(ResourceMessageException.USER_WITHOUT_PERMISSION_ACCESS_RESOURCE);
 
         }
 		catch (SecurityTokenExpiredException)
@@ -36,7 +37,7 @@ public class AuthenticatedUserFilter(IUserReadOnlyRepository repository, IAccess
 		}
 		catch
 		{
-			context.Result = new UnauthorizedObjectResult(new ResponseErrorJson("You can't access this resource."));
+			context.Result = new UnauthorizedObjectResult(new ResponseErrorJson(ResourceMessageException.USER_WITHOUT_PERMISSION_ACCESS_RESOURCE));
 		}
     }
 
@@ -45,7 +46,7 @@ public class AuthenticatedUserFilter(IUserReadOnlyRepository repository, IAccess
 		var authentication = context.HttpContext.Request.Headers.Authorization.ToString();
 
 		if (string.IsNullOrWhiteSpace(authentication))
-			throw new UnauthorizedException("No token was provided.");
+			throw new UnauthorizedException(ResourceMessageException.NO_TOKEN);
 
 		return authentication["Bearer ".Length..].Trim();
     }

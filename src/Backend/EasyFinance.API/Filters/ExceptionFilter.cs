@@ -1,4 +1,5 @@
 ﻿using EasyFinance.Communication.Response;
+using EasyFinance.Exceptions;
 using EasyFinance.Exceptions.ExceptionBase;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -23,7 +24,7 @@ public class ExceptionFilter : IExceptionFilter
     private void ThrowUnknowException(ExceptionContext context)
     {
         context.HttpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
-        context.Result = new ObjectResult(new ResponseErrorJson("Unknow erorr."));
+        context.Result = new ObjectResult(new ResponseErrorJson(ResourceMessageException.UNKNOWN_ERROR));
     }
 }
 

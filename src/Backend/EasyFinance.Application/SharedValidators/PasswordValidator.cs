@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using EasyFinance.Exceptions;
+using FluentValidation;
 using FluentValidation.Validators;
 
 namespace EasyFinance.Application.SharedValidators;
@@ -8,13 +9,13 @@ public class PasswordValidator<T> : PropertyValidator<T, string>
     {
         if (string.IsNullOrWhiteSpace(password))
         {
-            context.MessageFormatter.AppendArgument("ErrorMessage", "Password empty");
+            context.MessageFormatter.AppendArgument("ErrorMessage", ResourceMessageException.PASSWORD_EMPTY);
             return false;
         }
 
         if (password.Length < 8)
         {
-            context.MessageFormatter.AppendArgument("ErrorMessage", "Minimum password length is 8 characters");
+            context.MessageFormatter.AppendArgument("ErrorMessage", ResourceMessageException.MINIMUM_PASSWORD_LENGTH);
             return false;
         }
 

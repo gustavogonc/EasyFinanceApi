@@ -5,6 +5,7 @@ using EasyFinance.Domain.Repositories;
 using EasyFinance.Domain.Repositories.User;
 using EasyFinance.Domain.Security.Cryptography;
 using EasyFinance.Domain.Security.Tokens;
+using EasyFinance.Exceptions;
 using EasyFinance.Exceptions.ExceptionBase;
 
 namespace EasyFinance.Application.UseCases.User.Register;
@@ -45,7 +46,7 @@ public class RegisterUserUseCase(IUserWriteOnlyRepository repository, IUserReadO
 
         if (existsUser) 
         {
-            result.Errors.Add(new FluentValidation.Results.ValidationFailure(string.Empty, "Email already registered."));
+            result.Errors.Add(new FluentValidation.Results.ValidationFailure(string.Empty, ResourceMessageException.EMAIL_ALREADY_REGISTERED));
         }
 
         if (!result.IsValid)
