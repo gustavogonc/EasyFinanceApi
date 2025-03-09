@@ -126,6 +126,9 @@
   <data name="EMAIL_INVALID" xml:space="preserve">
     <value>The email must be a valid email address.</value>
   </data>
+  <data name="EMAIL_OR_PASSWORD_INVALID" xml:space="preserve">
+    <value>Invalid e-mail and/or password.</value>
+  </data>
   <data name="MINIMUM_PASSWORD_LENGTH" xml:space="preserve">
     <value>Minimum password length is 8 characters.</value>
   </data>

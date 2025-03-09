@@ -1,4 +1,5 @@
 ﻿using EasyFinance.Application.Services.AutoMapper;
+using EasyFinance.Application.UseCases.Login;
 using EasyFinance.Application.UseCases.User.Register;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,6 +24,8 @@ public static class DependencyInjectionExtension
     private static void AddUseCases(IServiceCollection services)
     {
         services.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>();
+
+        services.AddScoped<IDoLoginUseCase, DoLoginUseCase>();
     }
 }
 
