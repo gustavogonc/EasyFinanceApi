@@ -1,4 +1,5 @@
-﻿using EasyFinance.Communication.Request;
+﻿using AutoMapper;
+using EasyFinance.Communication.Request;
 using EasyFinance.Domain.Repositories;
 using EasyFinance.Domain.Repositories.User;
 using EasyFinance.Domain.Security.Cryptography;
@@ -6,18 +7,16 @@ using EasyFinance.Exceptions.ExceptionBase;
 
 namespace EasyFinance.Application.UseCases.User.Register;
 public class RegisterUserUseCase(IUserWriteOnlyRepository repository, IUserReadOnlyRepository readOnlyRepository, 
-                                 IUnitOfWork unitOfWork, IPasswordEncrypter passwordEncrypter) : IRegisterUserUseCase
+                                 IUnitOfWork unitOfWork, IPasswordEncrypter passwordEncrypter,
+                                 IMapper mapper) : IRegisterUserUseCase
 {
     public async Task Execute(RequestRegisterUserJson request)
     {
         await ValidateAsync(request);
 
-        Domain.Entities.User user = new()
-        {
-            Email = request.Email,
-            Name = request.Name,
-            Password = passwordEncrypter.Encrypt(request.Password),
-        };
+        var user = mapper.Map<Domain.Entities.User>(request);
+
+        user.Password = passwordEncrypter.Encrypt(request.Password);   
 
         await repository.RegisterUserAsync(user);
 
