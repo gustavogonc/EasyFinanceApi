@@ -1,10 +1,13 @@
 ﻿using EasyFinance.Domain.Repositories;
 using EasyFinance.Domain.Repositories.User;
 using EasyFinance.Domain.Security.Cryptography;
+using EasyFinance.Domain.Security.Tokens;
 using EasyFinance.Infraestructure.DataAccess;
 using EasyFinance.Infraestructure.DataAccess.Repositories;
 using EasyFinance.Infraestructure.Extensions;
 using EasyFinance.Infraestructure.Security.Cryptography;
+using EasyFinance.Infraestructure.Security.Tokens.Access.Generator;
+using EasyFinance.Infraestructure.Security.Tokens.Access.Validator;
 using FluentMigrator.Runner;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -20,6 +23,7 @@ public static class DependencyInjectionExtension
         AddRepositories(services);
         AddFluentMigrator(services, configuration);
         AddPasswordEncrypter(services);
+        AddTokens(services, configuration);
     }
 
     private static void AddDbContext(IServiceCollection services, IConfiguration configuration)
@@ -51,6 +55,15 @@ public static class DependencyInjectionExtension
 
         services.AddScoped<IUserWriteOnlyRepository, UserRepository>();
         services.AddScoped<IUserReadOnlyRepository, UserRepository>();
+    }
+
+    private static void AddTokens(IServiceCollection services, IConfiguration configuration)
+    {
+        var expirationTimeMinutes = configuration.GetValue<uint>("Jwt:ExpirationTimeMinutes");
+        var signinKey = configuration.GetValue<string>("Jwt:SigninKey");
+
+        services.AddScoped<IAccessTokenGenerator>(option => new JwtTokenGenerator(expirationTimeMinutes, signinKey!));
+        services.AddScoped<IAccessTokenValidator>(option => new JwtTokenValidator(signinKey!));
     }
 
 
