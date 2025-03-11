@@ -22,6 +22,7 @@ public class PasswordValidator<T> : PropertyValidator<T, string>
         return true;
     }
 
-    public override string Name => throw new NotImplementedException();
+    public override string Name => "PasswordValidator";
+    protected override string GetDefaultMessageTemplate(string errorCode) => "{ErrorMessage}";
 }
 

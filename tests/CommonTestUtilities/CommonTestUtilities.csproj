@@ -6,4 +6,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Bogus" Version="35.6.2" />
+    <PackageReference Include="Moq" Version="4.20.72" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Backend\EasyFinance.Domain\EasyFinance.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Shared\EasyFinance.Communication\EasyFinance.Communication.csproj" />
+  </ItemGroup>
+
 </Project>
