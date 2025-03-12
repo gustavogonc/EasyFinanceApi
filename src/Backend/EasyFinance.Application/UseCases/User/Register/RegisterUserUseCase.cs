@@ -28,7 +28,7 @@ public class RegisterUserUseCase(IUserWriteOnlyRepository repository, IUserReadO
         return new ResponseRegisteredUserJson
         {
             Name = user.Name,
-            Tokens =
+            Tokens = new ResponseTokensJson
             {
                 AccessToken = tokenGenerator.Generate(user.UserIdentifier),
                 RefreshToken = string.Empty
