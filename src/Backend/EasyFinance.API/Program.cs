@@ -3,6 +3,8 @@ using EasyFinance.Application;
 using EasyFinance.API.Filters;
 using EasyFinance.Infraestructure.Migrations;
 using EasyFinance.Infraestructure.Extensions;
+using EasyFinance.Domain.Security.Tokens;
+using EasyFinance.API.Token;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +22,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddInfraestructure(builder.Configuration);
 builder.Services.AddApplication(builder.Configuration);
+
+builder.Services.AddScoped<ITokenProvider, HttpContextTokenValue>();
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
