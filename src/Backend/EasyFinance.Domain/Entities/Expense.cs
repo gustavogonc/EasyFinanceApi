@@ -12,6 +12,8 @@ public class Expense : EntityBase
     public PaymentMethod PaymentMethod { get; set; }
     public int? Months { get; set; } = 1;
     public decimal Value { get; set; }
+    public bool IsRecurrent { get; set; } = false;
+    public bool IsRecurrentActive { get; set; } = false;
     public User User { get; set; } = default!;
     public long UserId { get; set; }
 }

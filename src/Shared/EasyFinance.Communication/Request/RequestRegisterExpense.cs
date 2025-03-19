@@ -9,6 +9,8 @@ public class RequestRegisterExpense
     public Category Category { get; set; }
     public PaymentMethod PaymentMethod { get; set; }
     public int? Months { get; set; } = 1;
+    public bool? IsRecurrent { get; set; }
+    public bool? IsRecurrentActive { get; set; }
     public decimal Value { get; set; }
 }
 
