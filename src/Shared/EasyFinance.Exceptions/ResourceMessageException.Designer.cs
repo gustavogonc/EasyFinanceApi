@@ -97,6 +97,60 @@ namespace EasyFinance.Exceptions {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a The category is required..
+        /// </summary>
+        public static string EXPENSE_CATEGORY_EMPTY {
+            get {
+                return ResourceManager.GetString("EXPENSE_CATEGORY_EMPTY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a The expense&apos;s title is required..
+        /// </summary>
+        public static string EXPENSE_EMPTY_TITLE {
+            get {
+                return ResourceManager.GetString("EXPENSE_EMPTY_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a The value must be greather than zero..
+        /// </summary>
+        public static string EXPENSE_GREATHER_THAN_ZERO {
+            get {
+                return ResourceManager.GetString("EXPENSE_GREATHER_THAN_ZERO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a The months value must be greather than zero..
+        /// </summary>
+        public static string EXPENSE_MONTHS_GREATHER_THAN_ZERO {
+            get {
+                return ResourceManager.GetString("EXPENSE_MONTHS_GREATHER_THAN_ZERO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a The payment method is required..
+        /// </summary>
+        public static string EXPENSE_PAYMENT_METHOD_EMPTY {
+            get {
+                return ResourceManager.GetString("EXPENSE_PAYMENT_METHOD_EMPTY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a The type is required..
+        /// </summary>
+        public static string EXPENSE_TYPE_EMPTY {
+            get {
+                return ResourceManager.GetString("EXPENSE_TYPE_EMPTY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Minimum password length is 8 characters..
         /// </summary>
         public static string MINIMUM_PASSWORD_LENGTH {

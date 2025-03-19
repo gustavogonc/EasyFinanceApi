@@ -1,31 +1,74 @@
-﻿using EasyFinance.Communication.Request;
+﻿using AutoMapper;
+using EasyFinance.Communication.Request;
 using EasyFinance.Domain.Repositories;
 using EasyFinance.Domain.Repositories.Expense;
 using EasyFinance.Domain.Services.LoggedUser;
+using EasyFinance.Exceptions.ExceptionBase;
 
 namespace EasyFinance.Application.UseCases.Expense.Register;
 public class RegisterExpenseUseCase(IExpenseWriteOnlyRepository writeOnlyRepository, IUnitOfWork unitOfWork, 
-                                    ILoggedUser loggedUser) : IRegisterExpenseUseCase
+                                    ILoggedUser loggedUser, IMapper mapper) : IRegisterExpenseUseCase
 {
     public async Task Execute(RequestRegisterExpense request)
     {
-        var user = await loggedUser.User();
-        var expense = new Domain.Entities.Expense
-        {
-            Title = request.Title,
-            Category = (Domain.Enum.Category)request.Category,
-            Months = request.Months,
-            PaymentMethod = (Domain.Enum.PaymentMethod)request.PaymentMethod,
-            Date = request.Date,
-            StartMonth = request.Date.Month,
-            StartYear = request.Date.Year,
-            Type = (Domain.Enum.ExpenseType)request.Type,
-            Value = request.Value,
-            UserId = user.Id
-        };
+        await Validate(request);
 
-        await writeOnlyRepository.AddExpenseAsync(expense);
+        var user = await loggedUser.User();
+
+        if (request.Months > 0)
+        {
+            await DivideExpenses(request, user);
+        }
+        else
+        {
+            var expense = mapper.Map<Domain.Entities.Expense>(request);
+
+            expense.UserId = user.Id;
+            expense.StartMonth = request.Date.Month;
+            expense.StartYear = request.Date.Year;
+
+            await writeOnlyRepository.AddExpenseAsync(expense);
+        }
+
         await unitOfWork.CommitAsync();
+    }
+
+    private async Task DivideExpenses(RequestRegisterExpense request, Domain.Entities.User user)
+    {
+        IList<Domain.Entities.Expense> expensesList = [];
+
+        for (int i = 1; i <= request.Months; i++)
+        {
+            var expenseItem = mapper.Map<Domain.Entities.Expense>(request);
+            expenseItem.UserId = user.Id;
+            expenseItem.StartMonth = request.Date.Month;
+            expenseItem.StartYear = request.Date.Year;
+
+            if (i > 1)
+            {
+                expenseItem.Date = request.Date.AddMonths(i - 1);
+            }
+
+            expenseItem.Value = Math.Ceiling(request.Value / (decimal)request.Months);
+
+            expensesList.Add(expenseItem);
+        }
+
+        await writeOnlyRepository.AddExpenseListAsync(expensesList);
+    }
+
+    private static async Task Validate(RequestRegisterExpense request)
+    {
+        var validator = new RegisterExpenseValidator();
+
+        var result = await validator.ValidateAsync(request);
+
+        if (!result.IsValid)
+        {
+            var errors = result.Errors.Select(error => error.ErrorMessage).ToList();
+
+            throw new ErrorOnValidationException(errors);
+        }
     }
 }
 
