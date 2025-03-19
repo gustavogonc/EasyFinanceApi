@@ -5,6 +5,7 @@ using EasyFinance.Infraestructure.Migrations;
 using EasyFinance.Infraestructure.Extensions;
 using EasyFinance.Domain.Security.Tokens;
 using EasyFinance.API.Token;
+using EasyFinance.API.BackgroundServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +26,10 @@ builder.Services.AddApplication(builder.Configuration);
 
 builder.Services.AddScoped<ITokenProvider, HttpContextTokenValue>();
 builder.Services.AddHttpContextAccessor();
+
+
+builder.Services.AddHostedService<IncreaseRecurrentBillsService>();
+
 
 var app = builder.Build();
 

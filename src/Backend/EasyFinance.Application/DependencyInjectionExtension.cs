@@ -1,5 +1,6 @@
 ﻿using EasyFinance.Application.Services.AutoMapper;
 using EasyFinance.Application.UseCases.Expense.Register;
+using EasyFinance.Application.UseCases.Expense.RegisterRecurrent;
 using EasyFinance.Application.UseCases.Login;
 using EasyFinance.Application.UseCases.User.Register;
 using Microsoft.Extensions.Configuration;
@@ -29,6 +30,7 @@ public static class DependencyInjectionExtension
         services.AddScoped<IDoLoginUseCase, DoLoginUseCase>();
 
         services.AddScoped<IRegisterExpenseUseCase, RegisterExpenseUseCase>();
+        services.AddScoped<IRegisterRecurrentExpenseUseCase, RegisterRecurrentExpenseUseCase>();
     }
 }
 

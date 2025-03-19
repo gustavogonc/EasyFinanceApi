@@ -8,6 +8,7 @@ public class UserRepository(EasyFinanceDbContext dbContext) : IUserReadOnlyRepos
     public async Task<bool> ExistActiveUserWithIdentifierAsync(Guid userIdentifier) => await dbContext.Users.AnyAsync(user => user.UserIdentifier == userIdentifier && user.Active);
     public async Task<bool> ExistsUserWithEmailAsync(string email) => await dbContext.Users.AnyAsync(user => user.Email == email && user.Active);
     public async Task<User?> GetByEmailAsync(string email) => await dbContext.Users.FirstOrDefaultAsync(user => user.Email == email && user.Active);
+    public async Task<IList<User>> ListActiveUsersAsync() => await dbContext.Users.Where(user => user.Active).ToListAsync();
     public async Task RegisterUserAsync(User request) => await dbContext.Users.AddAsync(request);
 }
 
