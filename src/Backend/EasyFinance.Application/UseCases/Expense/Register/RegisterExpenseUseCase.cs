@@ -9,7 +9,7 @@ namespace EasyFinance.Application.UseCases.Expense.Register;
 public class RegisterExpenseUseCase(IExpenseWriteOnlyRepository writeOnlyRepository, IUnitOfWork unitOfWork, 
                                     ILoggedUser loggedUser, IMapper mapper) : IRegisterExpenseUseCase
 {
-    public async Task Execute(RequestRegisterExpense request)
+    public async Task Execute(RequestRegisterExpenseJson request)
     {
         await Validate(request);
 
@@ -33,7 +33,7 @@ public class RegisterExpenseUseCase(IExpenseWriteOnlyRepository writeOnlyReposit
         await unitOfWork.CommitAsync();
     }
 
-    private async Task DivideExpenses(RequestRegisterExpense request, Domain.Entities.User user)
+    private async Task DivideExpenses(RequestRegisterExpenseJson request, Domain.Entities.User user)
     {
         IList<Domain.Entities.Expense> expensesList = [];
 
@@ -57,7 +57,7 @@ public class RegisterExpenseUseCase(IExpenseWriteOnlyRepository writeOnlyReposit
         await writeOnlyRepository.AddExpenseListAsync(expensesList);
     }
 
-    private static async Task Validate(RequestRegisterExpense request)
+    private static async Task Validate(RequestRegisterExpenseJson request)
     {
         var validator = new RegisterExpenseValidator();
 
