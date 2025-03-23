@@ -1,4 +1,5 @@
 ﻿using EasyFinance.Communication.Request;
+using EasyFinance.Exceptions;
 using Shouldly;
 using System.Net;
 using System.Text.Json;
@@ -38,6 +39,54 @@ public class DoLoginTest : EasyFinanceClassFixture
 
         responseData.RootElement.GetProperty("name").GetString().ShouldBe(_name);
         responseData.RootElement.GetProperty("tokens").GetProperty("accessToken").GetString().ShouldNotBeNullOrWhiteSpace();
+    }
+
+    [Fact]
+    public async Task Error_Password_Invalid()
+    {
+        var request = new RequestLoginJson
+        {
+            Email = _email,
+            Password = string.Empty,
+        };
+
+        var response = await DoPost(url: url, request: request);
+
+        response.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
+
+        await using var responseBody = await response.Content.ReadAsStreamAsync();
+
+        var responseData = await JsonDocument.ParseAsync(responseBody);
+
+        var errors = responseData.RootElement.GetProperty("errors").EnumerateArray();
+
+        var expectedMessage = ResourceMessageException.ResourceManager.GetString("EMAIL_OR_PASSWORD_INVALID");
+
+        errors.ShouldHaveSingleItem().ShouldSatisfyAllConditions(error => error.GetString()?.ShouldContain(expectedMessage!));
+    }
+
+    [Fact]
+    public async Task Error_Email_Invalid()
+    {
+        var request = new RequestLoginJson
+        {
+            Email = string.Empty,
+            Password = _password,
+        };
+
+        var response = await DoPost(url: url, request: request);
+
+        response.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
+
+        await using var responseBody = await response.Content.ReadAsStreamAsync();
+
+        var responseData = await JsonDocument.ParseAsync(responseBody);
+
+        var errors = responseData.RootElement.GetProperty("errors").EnumerateArray();
+
+        var expectedMessage = ResourceMessageException.ResourceManager.GetString("EMAIL_OR_PASSWORD_INVALID");
+
+        errors.ShouldHaveSingleItem().ShouldSatisfyAllConditions(error => error.GetString()?.ShouldContain(expectedMessage!));
     }
 }
 
