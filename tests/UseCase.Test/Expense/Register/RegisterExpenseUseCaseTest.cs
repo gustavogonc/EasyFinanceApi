@@ -25,7 +25,7 @@ public class RegisterExpenseUseCaseTest
     [Fact]
     public async void Success()
     {
-        var user = UserBuilder.Build();
+        var (user, _) = UserBuilder.Build();
 
         var useCase = CreateUseCase(user);
 
@@ -39,7 +39,7 @@ public class RegisterExpenseUseCaseTest
     [Fact]
     public async void Error_Zero_Value()
     {
-        var user = UserBuilder.Build();
+        var (user, _) = UserBuilder.Build();
 
         var useCase = CreateUseCase(user);
 
@@ -57,7 +57,7 @@ public class RegisterExpenseUseCaseTest
     [Fact]
     public async void Error_Zero_Month()
     {
-        var user = UserBuilder.Build();
+        var (user, _) = UserBuilder.Build();
 
         var useCase = CreateUseCase(user);
 
@@ -75,7 +75,7 @@ public class RegisterExpenseUseCaseTest
     [Fact]
     public async void Error_Empty_Title()
     {
-        var user = UserBuilder.Build();
+        var (user, _) = UserBuilder.Build();
 
         var useCase = CreateUseCase(user);
 
@@ -93,7 +93,7 @@ public class RegisterExpenseUseCaseTest
     [Fact]
     public async void Error_Null_Category()
     {
-        var user = UserBuilder.Build();
+        var (user, _) = UserBuilder.Build();
 
         var useCase = CreateUseCase(user);
 
@@ -111,7 +111,7 @@ public class RegisterExpenseUseCaseTest
     [Fact]
     public async void Error_Null_Type()
     {
-        var user = UserBuilder.Build();
+        var (user, _) = UserBuilder.Build();
 
         var useCase = CreateUseCase(user);
 
@@ -129,7 +129,7 @@ public class RegisterExpenseUseCaseTest
     [Fact]
     public async void Error_Null_PaymentMethod()
     {
-        var user = UserBuilder.Build();
+        var (user, _) = UserBuilder.Build();
 
         var useCase = CreateUseCase(user);
 
