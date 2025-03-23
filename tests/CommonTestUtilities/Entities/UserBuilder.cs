@@ -5,7 +5,7 @@ using EasyFinance.Domain.Entities;
 namespace CommonTestUtilities.Entities;
 public class UserBuilder
 {
-    public static User Build()
+    public static (User, string password) Build()
     {
         var passwordEncrypter = PasswordEncrypterBuilder.Build();
 
@@ -18,7 +18,7 @@ public class UserBuilder
              .RuleFor(user => user.UserIdentifier, _ => Guid.NewGuid())
              .RuleFor(user => user.Password, passwordEncrypter.Encrypt(password));
 
-        return user;
+        return (user, password);
     }
 }
 

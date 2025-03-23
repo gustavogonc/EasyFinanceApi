@@ -9,7 +9,7 @@ namespace EasyFinance.Application.UseCases.Login;
 public class DoLoginUseCase(IUserReadOnlyRepository readOnlyRepository, IAccessTokenGenerator tokenGenerator,
                             IPasswordEncrypter passwordEncrypter) : IDoLoginUseCase
 {
-    public async Task<ResponseTokensJson> Execute(RequestLoginJson request)
+    public async Task<ResponseRegisteredUserJson> Execute(RequestLoginJson request)
     {
         var user = await readOnlyRepository.GetByEmailAsync(request.Email);
 
@@ -18,10 +18,14 @@ public class DoLoginUseCase(IUserReadOnlyRepository readOnlyRepository, IAccessT
             throw new InvalidLoginException();
         }
 
-        return new ResponseTokensJson
+        return new ResponseRegisteredUserJson
         {
-            AccessToken = tokenGenerator.Generate(user.UserIdentifier),
-            RefreshToken = string.Empty
+           Name = user.Name,
+           Tokens = new ResponseTokensJson
+           {
+               AccessToken = tokenGenerator.Generate(user.UserIdentifier),
+               RefreshToken = string.Empty
+           }
         };
     }
 }

@@ -4,6 +4,6 @@ using EasyFinance.Communication.Response;
 namespace EasyFinance.Application.UseCases.Login;
 public interface IDoLoginUseCase
 {
-    Task<ResponseTokensJson> Execute(RequestLoginJson request);
+    Task<ResponseRegisteredUserJson> Execute(RequestLoginJson request);
 }
 

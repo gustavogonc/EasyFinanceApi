@@ -1,4 +1,5 @@
-﻿using EasyFinance.Infraestructure.DataAccess;
+﻿using CommonTestUtilities.Entities;
+using EasyFinance.Infraestructure.DataAccess;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,8 @@ using Microsoft.Extensions.DependencyInjection;
 namespace WebApi.Test;
 public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 {
+    private EasyFinance.Domain.Entities.User _user = default!;
+    private string _password = string.Empty;
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder.UseEnvironment("Test")
@@ -29,8 +32,24 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
                 var dbContext = scope.ServiceProvider.GetRequiredService<EasyFinanceDbContext>();
 
                 dbContext.Database.EnsureDeleted();
+
+                StartDatabase(dbContext);
             });
 
+    }
+
+    public string GetEmail() => _user.Email;
+    public string GetPassword() => _password;
+    public string GetName() => _user.Name;
+    public Guid GetIdentifier() => _user.UserIdentifier;
+
+    private void StartDatabase(EasyFinanceDbContext dbContext)
+    {
+        (_user, _password) = UserBuilder.Build();
+
+        dbContext.Users.Add(_user);
+
+        dbContext.SaveChanges();
     }
 }
 
